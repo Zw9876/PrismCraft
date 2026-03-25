@@ -19,46 +19,16 @@
 </head>
 <body>
 <div id="output">Loading Eaglercraft...</div>
+<script src="wasm-gc-runtime.js"></script>
 <script>
-    async function loadWasm() {
-        try {
-            const response = await fetch('eaglercraft.wasm');
-            const bytes = await response.arrayBuffer();
-            const imports = {
-                teavm: {
-                    takeStackTrace: () => null,
-                    decorateException: (e) => e,
-                },
-                teavmConsole: {
-                    putcharStdout: (c) => {},
-                },
-                teavmJso: {
-                    createClass: (name, parent, constructor) => {},
-                    getProperty: (obj, name) => obj?.[name],
-                    defineFunction: (obj, name, fn) => {},
-                    defineStaticMethod: (obj, name, fn) => {},
-                    unwrapInt: (v) => v | 0,
-                    wrapInt: (v) => v | 0,
-                    unwrapJavaObject: (v) => v,
-                    wrapObject: (v) => v,
-                    javaObjectToJS: (v) => v,
-                    createFunction1: (fn) => fn,
-                    callFunction1: (fn, arg) => fn(arg),
-                    isPrimitive: (v) => typeof v !== 'object',
-                    isUndefined: (v) => v === undefined,
-                    stringBuiltinsSupported: () => true,
-                }
-            };
-            const { instance } = await WebAssembly.instantiate(bytes, imports, {
-                builtins: ['js-string']
-            });
-            document.getElementById('output').innerText = 'Eaglercraft wasm loaded successfully!';
-        } catch (e) {
-            document.getElementById('output').innerText = 'Error: ' + e.message;
-            console.error(e);
-        }
-    }
-    loadWasm();
+    TeaVM.wasmGC.load("eaglercraft.wasm").then(teavm => {
+        const main = teavm.instance.exports['main'];
+        main.value([]);
+        document.getElementById('output').innerText = 'Eaglercraft 1.16 loaded successfully!';
+    }).catch(e => {
+        document.getElementById('output').innerText = 'Error: ' + e.message;
+        console.error(e);
+    });
 </script>
 </body>
 </html>

@@ -34,4 +34,14 @@ tasks.register('copyHtml', Copy) {
     into layout.buildDirectory.dir("teavm/wasm-gc")
 }
 
+tasks.register('copyWasmRuntime', Copy) {
+    dependsOn 'generateWasmGC'
+    from configurations.runtimeClasspath
+            .resolvedConfiguration.resolvedArtifacts
+            .find { it.name == 'teavm-core' }?.file
+    into layout.buildDirectory.dir("teavm/wasm-gc")
+}
+
+generateWasmGC.finalizedBy copyHtml
+
 generateWasmGC.finalizedBy copyHtml
