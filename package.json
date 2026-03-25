@@ -1,0 +1,24 @@
+{
+  "name": "eaglercraft-1.16",
+  "version": "1.0.0",
+  "description": "Attempt to port 1.16 to Eaglercraft",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve build/teavm/wasm-gc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zw9876/eaglercraft-1.16.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Zw9876/eaglercraft-1.16/issues"
+  },
+  "homepage": "https://github.com/Zw9876/eaglercraft-1.16#readme",
+  "devDependencies": {
+    "serve": "^14.2.6"
+  }
+}

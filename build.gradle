@@ -22,8 +22,16 @@ dependencies {
 teavm {
     all {
         mainClass = 'com.eaglercraft.Main'
+        outputDir = layout.buildDirectory.dir("teavm").get().asFile
     }
     wasmGC {
         targetFileName = 'eaglercraft.wasm'
     }
 }
+
+tasks.register('copyHtml', Copy) {
+    from 'src/main/resources/index.html'
+    into layout.buildDirectory.dir("teavm/wasm-gc")
+}
+
+generateWasmGC.finalizedBy copyHtml
