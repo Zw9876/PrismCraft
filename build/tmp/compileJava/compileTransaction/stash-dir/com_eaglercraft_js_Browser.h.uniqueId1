@@ -18,7 +18,7 @@ JNIEXPORT jobject JNICALL Java_com_eaglercraft_js_Browser_getDocument
 /*
  * Class:     com_eaglercraft_js_Browser
  * Method:    getWindow
- * Signature: ()Lcom/eaglercraft/js/Window;
+ * Signature: ()Lorg/teavm/jso/JSObject;
  */
 JNIEXPORT jobject JNICALL Java_com_eaglercraft_js_Browser_getWindow
   (JNIEnv *, jclass);

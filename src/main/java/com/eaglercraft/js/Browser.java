@@ -8,5 +8,5 @@ public class Browser {
     public static native Document getDocument();
 
     @JSBody(script = "return window;")
-    public static native JSObject getWindow();
+    public static native Window getWindow();
 }

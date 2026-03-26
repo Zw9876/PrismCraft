@@ -24,10 +24,7 @@ public class Main {
         }
 
         WebGL2RenderingContext gl = (WebGL2RenderingContext) contextObj;
-        gl.viewport(0, 0, canvas.getWidth(), canvas.getHeight());
-        gl.clearColor(0.2f, 0.3f, 0.8f, 1.0f);
-        gl.clear(gl.getColorBufferBit());
-
-        System.out.println("WebGL2 initialized! Screen cleared to blue.");
+        GameLoop gameLoop = new GameLoop(canvas, gl);
+        gameLoop.start();
     }
 }
