@@ -24,7 +24,8 @@ public class Main {
         }
 
         WebGL2RenderingContext gl = (WebGL2RenderingContext) contextObj;
-        GameLoop gameLoop = new GameLoop(canvas, gl);
+        InputHandler input = new InputHandler();
+        GameLoop gameLoop = new GameLoop(canvas, gl, input);
         gameLoop.start();
     }
 }

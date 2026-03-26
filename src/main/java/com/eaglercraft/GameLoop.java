@@ -1,6 +1,5 @@
 package com.eaglercraft;
 
-import com.eaglercraft.js.AnimationFrameCallback;
 import com.eaglercraft.js.Browser;
 import com.eaglercraft.js.HTMLCanvas;
 import com.eaglercraft.js.WebGL2RenderingContext;
@@ -8,12 +7,14 @@ import com.eaglercraft.js.WebGL2RenderingContext;
 public class GameLoop {
     private final WebGL2RenderingContext gl;
     private final HTMLCanvas canvas;
+    private final InputHandler input;
     private boolean running = false;
     private int frameCount = 0;
 
-    public GameLoop(HTMLCanvas canvas, WebGL2RenderingContext gl) {
+    public GameLoop(HTMLCanvas canvas, WebGL2RenderingContext gl, InputHandler input) {
         this.canvas = canvas;
         this.gl = gl;
+        this.input = input;
     }
 
     public void start() {
