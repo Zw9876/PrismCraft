@@ -5,29 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eaglercraft 1.16</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            font-family: monospace;
+            background-color: #000000;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            overflow: hidden;
+        }
+        #gameCanvas {
+            display: block;
+            width: 854px;
+            height: 480px;
+            background-color: #000000;
         }
     </style>
 </head>
 <body>
-<div id="output">Loading Eaglercraft...</div>
+<canvas id="gameCanvas" width="854" height="480"></canvas>
 <script src="wasm-gc-runtime.js"></script>
 <script>
     TeaVM.wasmGC.load("eaglercraft.wasm").then(teavm => {
         const main = teavm.instance.exports['main'];
         main.value([]);
-        document.getElementById('output').innerText = 'Eaglercraft 1.16 loaded successfully!';
     }).catch(e => {
-        document.getElementById('output').innerText = 'Error: ' + e.message;
-        console.error(e);
+        console.error('Error loading wasm:', e);
     });
 </script>
 </body>
