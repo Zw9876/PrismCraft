@@ -10,21 +10,22 @@ public class Shader {
     private static final String VERTEX_SOURCE =
             "#version 300 es\n" +
                     "in vec3 aPosition;\n" +
-                    "in vec3 aColor;\n" +
-                    "out vec3 vColor;\n" +
+                    "in vec2 aTexCoord;\n" +
+                    "out vec2 vTexCoord;\n" +
                     "uniform mat4 uMVP;\n" +
                     "void main() {\n" +
                     "    gl_Position = uMVP * vec4(aPosition, 1.0);\n" +
-                    "    vColor = aColor;\n" +
+                    "    vTexCoord = vec2(aTexCoord.x, 1.0 - aTexCoord.y);\n" +
                     "}\n";
 
     private static final String FRAGMENT_SOURCE =
             "#version 300 es\n" +
                     "precision mediump float;\n" +
-                    "in vec3 vColor;\n" +
+                    "in vec2 vTexCoord;\n" +
                     "out vec4 fragColor;\n" +
+                    "uniform sampler2D uTexture;\n" +
                     "void main() {\n" +
-                    "    fragColor = vec4(vColor, 1.0);\n" +
+                    "    fragColor = texture(uTexture, vTexCoord);\n" +
                     "}\n";
 
     public Shader(WebGL2RenderingContext gl) {
@@ -76,6 +77,11 @@ public class Shader {
     public void setMVP(float[] matrix) {
         JSObject location = gl.getUniformLocation(program, "uMVP");
         gl.uniformMatrix4fv(location, false, GLUtils.createFloat32Array(matrix));
+    }
+
+    public void setTexture(int unit) {
+        JSObject location = gl.getUniformLocation(program, "uTexture");
+        gl.uniformMatrix4fv(location, false, GLUtils.createFloat32Array(new float[]{unit}));
     }
 
     public int getAttribLocation(String name) {

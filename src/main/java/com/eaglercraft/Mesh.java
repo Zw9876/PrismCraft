@@ -25,15 +25,15 @@ public class Mesh {
     }
 
     public void setupAttribs(Shader shader) {
-        int stride = 6 * 4;
+        int stride = 5 * 4; // 5 floats * 4 bytes (x, y, z, u, v)
 
         int posLoc = shader.getAttribLocation("aPosition");
         gl.enableVertexAttribArray(posLoc);
         gl.vertexAttribPointer(posLoc, 3, gl.getFloat(), false, stride, 0);
 
-        int colLoc = shader.getAttribLocation("aColor");
-        gl.enableVertexAttribArray(colLoc);
-        gl.vertexAttribPointer(colLoc, 3, gl.getFloat(), false, stride, 3 * 4);
+        int texLoc = shader.getAttribLocation("aTexCoord");
+        gl.enableVertexAttribArray(texLoc);
+        gl.vertexAttribPointer(texLoc, 2, gl.getFloat(), false, stride, 3 * 4);
     }
 
     public void draw() {

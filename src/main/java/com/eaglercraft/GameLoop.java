@@ -14,51 +14,52 @@ public class GameLoop {
     private Shader shader;
     private Mesh mesh;
     private Camera camera;
+    private Texture texture;
 
     private static final float[] CUBE_VERTICES = {
-            // x      y      z     r     g     b
+            // x      y      z     u     v
             // Front face
-            -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
             // Back face
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+            0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
             // Left face
-            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
             // Right face
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
             // Top face
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
-            0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
             // Bottom face
-            -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 1.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
     };
 
     public GameLoop(HTMLCanvas canvas, WebGL2RenderingContext gl, InputHandler input) {
@@ -83,6 +84,9 @@ public class GameLoop {
 
         camera = new Camera(0.0f, 0.0f, 3.0f);
         gl.enable(gl.getDepthTest());
+
+        texture = new Texture(gl);
+        texture.load("grass.png");
 
         System.out.println("Rendering initialized!");
         scheduleFrame();
@@ -129,7 +133,10 @@ public class GameLoop {
         gl.clearColor(0.1f, 0.1f, 0.1f, 1.0f);
         gl.clear(gl.getColorBufferBit() | gl.getDepthBufferBit());
 
+        if (!texture.isLoaded()) return;
+
         shader.use();
+        texture.bind(0);
 
         float aspectRatio = (float) canvas.getWidth() / (float) canvas.getHeight();
         Matrix4f projection = camera.getProjectionMatrix(aspectRatio);
