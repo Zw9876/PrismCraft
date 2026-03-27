@@ -31,14 +31,6 @@ JNIEXPORT jobject JNICALL Java_com_eaglercraft_js_Browser_getWindow
 JNIEXPORT jboolean JNICALL Java_com_eaglercraft_js_Browser_isPointerLocked
   (JNIEnv *, jclass);
 
-/*
- * Class:     com_eaglercraft_js_Browser
- * Method:    addDocumentEventListener
- * Signature: (Ljava/lang/String;Lcom/eaglercraft/js/VoidCallback;)V
- */
-JNIEXPORT void JNICALL Java_com_eaglercraft_js_Browser_addDocumentEventListener
-  (JNIEnv *, jclass, jstring, jobject);
-
 #ifdef __cplusplus
 }
 #endif

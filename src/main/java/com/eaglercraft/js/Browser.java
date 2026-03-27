@@ -9,4 +9,10 @@ public class Browser {
 
     @JSBody(script = "return window;")
     public static native Window getWindow();
+
+    @JSBody(script = "return document.pointerLockElement !== null;")
+    public static native boolean isPointerLocked();
+
+    @JSBody(params = {"type", "callback"}, script = "document.addEventListener(type, callback);")
+    public static native void addDocumentEventListener(String type, VoidCallback callback);
 }

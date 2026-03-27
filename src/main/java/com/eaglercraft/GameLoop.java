@@ -72,6 +72,15 @@ public class GameLoop {
         if (input.isKeyDown("KeyS")) camera.moveBackward(speed);
         if (input.isKeyDown("KeyA")) camera.moveLeft(speed);
         if (input.isKeyDown("KeyD")) camera.moveRight(speed);
+
+        if (input.isPointerLocked()) {
+            float sensitivity = 0.1f;
+            camera.rotate(
+                    (float) input.getMouseDeltaX() * sensitivity,
+                    (float) -input.getMouseDeltaY() * sensitivity
+            );
+            input.consumeMouseDelta();
+        }
     }
 
     private void render() {

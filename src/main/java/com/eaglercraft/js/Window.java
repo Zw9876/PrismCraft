@@ -12,4 +12,7 @@ public interface Window extends JSObject {
 
     @JSMethod
     void addEventListener(String type, MouseEventCallback callback);
+
+    @JSMethod
+    void addEventListener(String type, VoidCallback callback);
 }
