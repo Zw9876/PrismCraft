@@ -2,7 +2,6 @@ package com.eaglercraft;
 
 import com.eaglercraft.js.WebGL2RenderingContext;
 import org.teavm.jso.JSObject;
-import org.teavm.jso.JSBody;
 
 public class Mesh {
     private final WebGL2RenderingContext gl;
@@ -14,9 +13,6 @@ public class Mesh {
         this.gl = gl;
     }
 
-    @JSBody(params = {"data"}, script = "return new Float32Array(data);")
-    private static native JSObject createFloat32Array(float[] data);
-
     public void upload(float[] vertices, int vertexCount) {
         this.vertexCount = vertexCount;
 
@@ -25,11 +21,11 @@ public class Mesh {
 
         vbo = gl.createBuffer();
         gl.bindBuffer(gl.getArrayBuffer(), vbo);
-        gl.bufferData(gl.getArrayBuffer(), createFloat32Array(vertices), gl.getStaticDraw());
+        gl.bufferData(gl.getArrayBuffer(), GLUtils.createFloat32Array(vertices), gl.getStaticDraw());
     }
 
     public void setupAttribs(Shader shader) {
-        int stride = 6 * 4; // 6 floats * 4 bytes each
+        int stride = 6 * 4;
 
         int posLoc = shader.getAttribLocation("aPosition");
         gl.enableVertexAttribArray(posLoc);

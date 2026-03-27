@@ -111,4 +111,11 @@ public interface WebGL2RenderingContext extends JSObject {
     // Draw methods
     @JSMethod
     void drawArrays(int mode, int first, int count);
+
+    // Uniform methods
+    @JSMethod
+    JSObject getUniformLocation(JSObject program, String name);
+
+    @JSMethod
+    void uniformMatrix4fv(JSObject location, boolean transpose, JSObject value);
 }

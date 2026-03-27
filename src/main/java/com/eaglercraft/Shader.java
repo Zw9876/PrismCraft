@@ -12,8 +12,9 @@ public class Shader {
                     "in vec3 aPosition;\n" +
                     "in vec3 aColor;\n" +
                     "out vec3 vColor;\n" +
+                    "uniform mat4 uMVP;\n" +
                     "void main() {\n" +
-                    "    gl_Position = vec4(aPosition, 1.0);\n" +
+                    "    gl_Position = uMVP * vec4(aPosition, 1.0);\n" +
                     "    vColor = aColor;\n" +
                     "}\n";
 
@@ -70,6 +71,11 @@ public class Shader {
 
     public void use() {
         gl.useProgram(program);
+    }
+
+    public void setMVP(float[] matrix) {
+        JSObject location = gl.getUniformLocation(program, "uMVP");
+        gl.uniformMatrix4fv(location, false, GLUtils.createFloat32Array(matrix));
     }
 
     public int getAttribLocation(String name) {

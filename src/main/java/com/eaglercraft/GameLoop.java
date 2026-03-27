@@ -3,6 +3,7 @@ package com.eaglercraft;
 import com.eaglercraft.js.Browser;
 import com.eaglercraft.js.HTMLCanvas;
 import com.eaglercraft.js.WebGL2RenderingContext;
+import com.eaglercraft.math.Matrix4f;
 
 public class GameLoop {
     private final WebGL2RenderingContext gl;
@@ -12,12 +13,12 @@ public class GameLoop {
     private int frameCount = 0;
     private Shader shader;
     private Mesh mesh;
+    private Camera camera;
 
-    // Triangle vertices: x, y, z, r, g, b
     private static final float[] TRIANGLE_VERTICES = {
-            0.0f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // top - red
-            -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left - green
-            0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // bottom right - blue
+            0.0f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
+            0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f
     };
 
     public GameLoop(HTMLCanvas canvas, WebGL2RenderingContext gl, InputHandler input) {
@@ -39,6 +40,8 @@ public class GameLoop {
         mesh = new Mesh(gl);
         mesh.upload(TRIANGLE_VERTICES, 3);
         mesh.setupAttribs(shader);
+
+        camera = new Camera(0.0f, 0.0f, 3.0f);
 
         System.out.println("Rendering initialized!");
         scheduleFrame();
@@ -63,7 +66,12 @@ public class GameLoop {
     }
 
     private void update(double timestamp) {
-        // Game logic will go here later
+        float speed = 0.05f;
+
+        if (input.isKeyDown("KeyW")) camera.moveForward(speed);
+        if (input.isKeyDown("KeyS")) camera.moveBackward(speed);
+        if (input.isKeyDown("KeyA")) camera.moveLeft(speed);
+        if (input.isKeyDown("KeyD")) camera.moveRight(speed);
     }
 
     private void render() {
@@ -72,6 +80,14 @@ public class GameLoop {
         gl.clear(gl.getColorBufferBit());
 
         shader.use();
+
+        float aspectRatio = (float) canvas.getWidth() / (float) canvas.getHeight();
+        Matrix4f projection = camera.getProjectionMatrix(aspectRatio);
+        Matrix4f view = camera.getViewMatrix();
+        Matrix4f model = new Matrix4f().identity();
+        Matrix4f mvp = projection.multiply(view).multiply(model);
+
+        shader.setMVP(mvp.toArray());
         mesh.draw();
     }
 }
