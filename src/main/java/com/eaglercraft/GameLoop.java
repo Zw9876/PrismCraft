@@ -15,10 +15,50 @@ public class GameLoop {
     private Mesh mesh;
     private Camera camera;
 
-    private static final float[] TRIANGLE_VERTICES = {
-            0.0f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
-            0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f
+    private static final float[] CUBE_VERTICES = {
+            // x      y      z     r     g     b
+            // Front face
+            -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
+            // Back face
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
+            // Left face
+            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
+            // Right face
+            0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
+            // Top face
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
+            0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
+            0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
+            0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
+            // Bottom face
+            -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
     };
 
     public GameLoop(HTMLCanvas canvas, WebGL2RenderingContext gl, InputHandler input) {
@@ -38,10 +78,11 @@ public class GameLoop {
         }
 
         mesh = new Mesh(gl);
-        mesh.upload(TRIANGLE_VERTICES, 3);
+        mesh.upload(CUBE_VERTICES, 36);
         mesh.setupAttribs(shader);
 
         camera = new Camera(0.0f, 0.0f, 3.0f);
+        gl.enable(gl.getDepthTest());
 
         System.out.println("Rendering initialized!");
         scheduleFrame();
@@ -86,7 +127,7 @@ public class GameLoop {
     private void render() {
         gl.viewport(0, 0, canvas.getWidth(), canvas.getHeight());
         gl.clearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        gl.clear(gl.getColorBufferBit());
+        gl.clear(gl.getColorBufferBit() | gl.getDepthBufferBit());
 
         shader.use();
 

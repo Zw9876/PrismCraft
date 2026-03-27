@@ -118,4 +118,14 @@ public interface WebGL2RenderingContext extends JSObject {
 
     @JSMethod
     void uniformMatrix4fv(JSObject location, boolean transpose, JSObject value);
+
+    // Depth testing
+    @JSProperty("DEPTH_BUFFER_BIT")
+    int getDepthBufferBit();
+
+    @JSProperty("DEPTH_TEST")
+    int getDepthTest();
+
+    @JSMethod
+    void enable(int cap);
 }
