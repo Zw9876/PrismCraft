@@ -71,6 +71,38 @@ JNIEXPORT jobject JNICALL Java_com_eaglercraft_js_Browser_createWebSocket__Ljava
 JNIEXPORT jobject JNICALL Java_com_eaglercraft_js_Browser_createAudioContext
   (JNIEnv *, jclass);
 
+/*
+ * Class:     com_eaglercraft_js_Browser
+ * Method:    localStorageSet
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_eaglercraft_js_Browser_localStorageSet
+  (JNIEnv *, jclass, jstring, jstring);
+
+/*
+ * Class:     com_eaglercraft_js_Browser
+ * Method:    localStorageGet
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_eaglercraft_js_Browser_localStorageGet
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     com_eaglercraft_js_Browser
+ * Method:    localStorageRemove
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_eaglercraft_js_Browser_localStorageRemove
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     com_eaglercraft_js_Browser
+ * Method:    openIndexedDB
+ * Signature: (Ljava/lang/String;ILcom/eaglercraft/js/IDBCallback;)V
+ */
+JNIEXPORT void JNICALL Java_com_eaglercraft_js_Browser_openIndexedDB
+  (JNIEnv *, jclass, jstring, jint, jobject);
+
 #ifdef __cplusplus
 }
 #endif

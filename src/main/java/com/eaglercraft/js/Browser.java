@@ -31,4 +31,24 @@ public class Browser {
 
     @JSBody(script = "return new (window.AudioContext || window.webkitAudioContext)();")
     public static native AudioContext createAudioContext();
+
+    @JSBody(params = {"key", "value"}, script = "localStorage.setItem(key, value);")
+    public static native void localStorageSet(String key, String value);
+
+    @JSBody(params = {"key"}, script = "return localStorage.getItem(key);")
+    public static native String localStorageGet(String key);
+
+    @JSBody(params = {"key"}, script = "localStorage.removeItem(key);")
+    public static native void localStorageRemove(String key);
+
+    @JSBody(params = {"dbName", "version", "callback"}, script =
+            "var request = indexedDB.open(dbName, version);" +
+                    "request.onsuccess = function(e) { callback(e.target.result); };" +
+                    "request.onupgradeneeded = function(e) {" +
+                    "    var db = e.target.result;" +
+                    "    if (!db.objectStoreNames.contains('data')) {" +
+                    "        db.createObjectStore('data');" +
+                    "    }" +
+                    "};")
+    public static native void openIndexedDB(String dbName, int version, IDBCallback callback);
 }

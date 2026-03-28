@@ -63,6 +63,14 @@ JNIEXPORT jobject JNICALL Java_com_eaglercraft_js_Browser_createWebSocket__Ljava
 JNIEXPORT jobject JNICALL Java_com_eaglercraft_js_Browser_createWebSocket__Ljava_lang_String_2Ljava_lang_String_2
   (JNIEnv *, jclass, jstring, jstring);
 
+/*
+ * Class:     com_eaglercraft_js_Browser
+ * Method:    createAudioContext
+ * Signature: ()Lcom/eaglercraft/js/AudioContext;
+ */
+JNIEXPORT jobject JNICALL Java_com_eaglercraft_js_Browser_createAudioContext
+  (JNIEnv *, jclass);
+
 #ifdef __cplusplus
 }
 #endif
