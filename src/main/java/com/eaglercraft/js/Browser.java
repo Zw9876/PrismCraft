@@ -22,4 +22,10 @@ public class Browser {
                     ".then(function(buf) { return JSZip.loadAsync(buf); })" +
                     ".then(function(zip) { callback(zip); });")
     public static native void loadEPK(String url, JSZipCallback callback);
+
+    @JSBody(params = {"url"}, script = "return new WebSocket(url);")
+    public static native WebSocket createWebSocket(String url);
+
+    @JSBody(params = {"url", "protocol"}, script = "return new WebSocket(url, protocol);")
+    public static native WebSocket createWebSocket(String url, String protocol);
 }
