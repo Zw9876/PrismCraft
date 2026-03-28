@@ -3,6 +3,7 @@ package com.eaglercraft;
 import com.eaglercraft.js.Browser;
 import com.eaglercraft.js.HTMLCanvas;
 import com.eaglercraft.js.WebGL2RenderingContext;
+import com.eaglercraft.resource.ResourceManager;
 import org.teavm.jso.JSObject;
 
 public class Main {
@@ -26,6 +27,10 @@ public class Main {
         WebGL2RenderingContext gl = (WebGL2RenderingContext) contextObj;
         InputHandler input = new InputHandler(canvas);
         GameLoop gameLoop = new GameLoop(canvas, gl, input);
-        gameLoop.start();
+
+        ResourceManager.loadEPK("assets.epk", () -> {
+            System.out.println("Assets loaded, starting game...");
+            gameLoop.start();
+        });
     }
 }

@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Zw9876/eaglercraft-1.16#readme",
   "devDependencies": {
+    "jszip": "^3.10.1",
     "serve": "^14.2.6"
   }
 }

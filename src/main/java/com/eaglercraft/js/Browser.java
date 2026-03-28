@@ -15,4 +15,11 @@ public class Browser {
 
     @JSBody(params = {"type", "callback"}, script = "document.addEventListener(type, callback);")
     public static native void addDocumentEventListener(String type, VoidCallback callback);
+
+    @JSBody(params = {"url", "callback"}, script =
+            "fetch(url)" +
+                    ".then(function(r) { return r.arrayBuffer(); })" +
+                    ".then(function(buf) { return JSZip.loadAsync(buf); })" +
+                    ".then(function(zip) { callback(zip); });")
+    public static native void loadEPK(String url, JSZipCallback callback);
 }
