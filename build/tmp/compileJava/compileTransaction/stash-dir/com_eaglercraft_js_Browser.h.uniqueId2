@@ -47,6 +47,22 @@ JNIEXPORT void JNICALL Java_com_eaglercraft_js_Browser_addDocumentEventListener
 JNIEXPORT void JNICALL Java_com_eaglercraft_js_Browser_loadEPK
   (JNIEnv *, jclass, jstring, jobject);
 
+/*
+ * Class:     com_eaglercraft_js_Browser
+ * Method:    createWebSocket
+ * Signature: (Ljava/lang/String;)Lcom/eaglercraft/js/WebSocket;
+ */
+JNIEXPORT jobject JNICALL Java_com_eaglercraft_js_Browser_createWebSocket__Ljava_lang_String_2
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     com_eaglercraft_js_Browser
+ * Method:    createWebSocket
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Lcom/eaglercraft/js/WebSocket;
+ */
+JNIEXPORT jobject JNICALL Java_com_eaglercraft_js_Browser_createWebSocket__Ljava_lang_String_2Ljava_lang_String_2
+  (JNIEnv *, jclass, jstring, jstring);
+
 #ifdef __cplusplus
 }
 #endif

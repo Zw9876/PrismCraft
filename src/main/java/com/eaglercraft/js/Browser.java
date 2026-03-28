@@ -28,4 +28,7 @@ public class Browser {
 
     @JSBody(params = {"url", "protocol"}, script = "return new WebSocket(url, protocol);")
     public static native WebSocket createWebSocket(String url, String protocol);
+
+    @JSBody(script = "return new (window.AudioContext || window.webkitAudioContext)();")
+    public static native AudioContext createAudioContext();
 }
