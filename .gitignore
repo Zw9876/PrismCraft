@@ -22,3 +22,15 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+minecraft-1.16.5.jar
+minecraft-1.16.5-mapped.jar
+client_mappings.txt
+client.tiny
+1.16.5.json
+version_manifest.json
+vineflower.jar
+tiny-remapper.jar
+enigma-cli.jar
+decompiled/
+decompiled-mapped/
