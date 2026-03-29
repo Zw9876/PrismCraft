@@ -270,4 +270,9 @@ public interface WebGL2RenderingContext extends JSObject {
     // Get methods
     @JSBody(params = {"pname"}, script = "return this.getParameter(pname);")
     int getParameterInt(int pname);
+
+    @JSMethod
+    void blitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1,
+                         int dstX0, int dstY0, int dstX1, int dstY1,
+                         int mask, int filter);
 }
