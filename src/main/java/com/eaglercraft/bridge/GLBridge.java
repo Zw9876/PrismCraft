@@ -273,6 +273,10 @@ public class GLBridge {
         JSObject rb = renderbuffers.get(renderbuffer);
         if (rb != null) gl.framebufferRenderbuffer(target, attachment, renderbuffertarget, rb);
     }
+    public static void deleteRenderbuffer(int renderbuffer) {
+        JSObject rb = renderbuffers.remove(renderbuffer);
+        if (rb != null) gl.deleteRenderbuffer(rb);
+    }
 
     // Get
     public static void getIntegerv(int pname, int[] params) {

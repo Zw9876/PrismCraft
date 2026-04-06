@@ -24,6 +24,7 @@ public class GL30 {
     public static void glRenderbufferStorage(int target, int internalformat, int width, int height) { GLBridge.renderbufferStorage(target, internalformat, width, height); }
     public static void glFramebufferTexture2D(int target, int attachment, int textarget, int texture, int level) { GLBridge.framebufferTexture2D(target, attachment, textarget, texture, level); }
     public static void glFramebufferRenderbuffer(int target, int attachment, int renderbuffertarget, int renderbuffer) { GLBridge.framebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer); }
+    public static void glDeleteRenderbuffers(int renderbuffer) { GLBridge.deleteRenderbuffer(renderbuffer); }
     public static int glCheckFramebufferStatus(int target) { return GLBridge.checkFramebufferStatus(target); }
     public static void glGenerateMipmap(int target) { GLBridge.generateMipmap(target); }
 }
