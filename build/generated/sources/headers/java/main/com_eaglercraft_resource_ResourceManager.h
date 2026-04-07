@@ -10,7 +10,7 @@ extern "C" {
 /*
  * Class:     com_eaglercraft_resource_ResourceManager
  * Method:    unpackZipJS
- * Signature: (Lcom/eaglercraft/js/JSZip;Lorg/teavm/jso/JSObject;Lcom/eaglercraft/js/RunnableCallback;)V
+ * Signature: (Lcom/eaglercraft/js/JSZip;Lorg/teavm/jso/JSObject;Lcom/eaglercraft/resource/ResourceManager/UnpackCallback;)V
  */
 JNIEXPORT void JNICALL Java_com_eaglercraft_resource_ResourceManager_unpackZipJS
   (JNIEnv *, jclass, jobject, jobject, jobject);
@@ -30,6 +30,38 @@ JNIEXPORT jobject JNICALL Java_com_eaglercraft_resource_ResourceManager_createJS
  */
 JNIEXPORT jobject JNICALL Java_com_eaglercraft_resource_ResourceManager_getFromJSObject
   (JNIEnv *, jclass, jobject, jstring);
+
+/*
+ * Class:     com_eaglercraft_resource_ResourceManager
+ * Method:    getResultCount
+ * Signature: (Lorg/teavm/jso/JSObject;)I
+ */
+JNIEXPORT jint JNICALL Java_com_eaglercraft_resource_ResourceManager_getResultCount
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     com_eaglercraft_resource_ResourceManager
+ * Method:    getResultName
+ * Signature: (Lorg/teavm/jso/JSObject;I)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_eaglercraft_resource_ResourceManager_getResultName
+  (JNIEnv *, jclass, jobject, jint);
+
+/*
+ * Class:     com_eaglercraft_resource_ResourceManager
+ * Method:    getResultData
+ * Signature: (Lorg/teavm/jso/JSObject;I)Lorg/teavm/jso/JSObject;
+ */
+JNIEXPORT jobject JNICALL Java_com_eaglercraft_resource_ResourceManager_getResultData
+  (JNIEnv *, jclass, jobject, jint);
+
+/*
+ * Class:     com_eaglercraft_resource_ResourceManager
+ * Method:    uint8ArrayToBytes
+ * Signature: (Lorg/teavm/jso/JSObject;)[I
+ */
+JNIEXPORT jintArray JNICALL Java_com_eaglercraft_resource_ResourceManager_uint8ArrayToBytes
+  (JNIEnv *, jclass, jobject);
 
 #ifdef __cplusplus
 }
