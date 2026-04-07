@@ -38,11 +38,23 @@ public class GlStateManager {
     public static void _disableTexture() {}
     public static void _activeTexture(int texture) { GL13.glActiveTexture(texture); }
     public static void _bindTexture(int texture) { GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture); }
-    public static void _deleteTexture(int texture) { GL11.glDeleteTextures(texture); }
+    public static void _genTextures(int[] textures) {
+        for (int i = 0; i < textures.length; i++) {
+            textures[i] = GL11.glGenTextures();
+        }
+    }
     public static int _genTexture() { return GL11.glGenTextures(); }
+    public static void _deleteTexture(int texture) { GL11.glDeleteTextures(texture); }
+    public static void _deleteTextures(int[] textures) {
+        for (int texture : textures) {
+            GL11.glDeleteTextures(texture);
+        }
+    }
     public static void _texParameter(int target, int pname, int param) { GL11.glTexParameteri(target, pname, param); }
     public static void _texParameter(int target, int pname, float param) {}
-    public static void _texImage2D(int target, int level, int internalFormat, int width, int height, int border, int format, int type, IntBuffer pixels) {}
+    public static void _texImage2D(int target, int level, int internalFormat, int width, int height, int border, int format, int type, IntBuffer pixels) {
+        GLBridge.texImage2D(target, level, internalFormat, width, height, border, format, type);
+    }
     public static void _texSubImage2D(int target, int level, int x, int y, int width, int height, int format, int type, long pixels) {}
     public static void _pixelStore(int pname, int param) {}
     public static int _getTexLevelParameter(int target, int level, int pname) { return 0; }
@@ -81,7 +93,7 @@ public class GlStateManager {
     public static void _stencilMask(int mask) {}
     public static void _stencilOp(int sfail, int dpfail, int dppass) {}
 
-    // Legacy client state stubs (not supported in WebGL2 - use GENERIC vertex attribs instead)
+    // Legacy client state stubs (not supported in WebGL2)
     public static void _enableClientState(int cap) {}
     public static void _disableClientState(int cap) {}
     public static void _vertexPointer(int size, int type, int stride, long pointer) {}
@@ -111,9 +123,12 @@ public class GlStateManager {
     public static int glGetProgrami(int program, int pname) { return GL20.glGetProgrami(program, pname); }
     public static String glGetProgramInfoLog(int program, int maxLength) { return GL20.glGetProgramInfoLog(program, maxLength); }
     public static void glUseProgram(int program) { GL20.glUseProgram(program); }
+    public static void _glUseProgram(int program) { GL20.glUseProgram(program); }
     public static void glDeleteProgram(int program) { GL20.glDeleteProgram(program); }
     public static int glGetUniformLocation(int program, CharSequence name) { return GL20.glGetUniformLocation(program, name); }
+    public static int _glGetUniformLocation(int program, CharSequence name) { return GL20.glGetUniformLocation(program, name); }
     public static int glGetAttribLocation(int program, CharSequence name) { return GL20.glGetAttribLocation(program, name); }
+    public static int _glGetAttribLocation(int program, CharSequence name) { return GL20.glGetAttribLocation(program, name); }
     public static void glUniform1i(int location, int v0) { GL20.glUniform1i(location, v0); }
     public static void glUniform1f(int location, float v0) { GL20.glUniform1f(location, v0); }
     public static void glUniform2f(int location, float v0, float v1) { GL20.glUniform2f(location, v0, v1); }
