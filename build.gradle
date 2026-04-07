@@ -29,9 +29,68 @@ teavm {
     }
 }
 
+// Task to extract assets from minecraft-1.16.5.jar
+tasks.register('extractMcAssets') {
+    doLast {
+        def mcJar = file('minecraft-1.16.5.jar')
+        if (!mcJar.exists()) {
+            println 'minecraft-1.16.5.jar not found, skipping asset extraction'
+            return
+        }
+        def outputDir = file('build/mc-assets')
+        outputDir.mkdirs()
+
+        // Only extract if jar is newer than output
+        def jarTime = mcJar.lastModified()
+        def markerFile = file('build/mc-assets/.extracted')
+        if (markerFile.exists() && markerFile.lastModified() >= jarTime) {
+            println 'MC assets already extracted, skipping'
+            return
+        }
+
+        println 'Extracting assets from minecraft-1.16.5.jar...'
+        ant.unzip(src: mcJar, dest: outputDir) {
+            patternset {
+                include(name: 'assets/**')
+            }
+        }
+        // Move assets/minecraft/* to root of output
+        def assetsDir = file('build/mc-assets/assets')
+        if (assetsDir.exists()) {
+            assetsDir.eachDir { nsDir ->
+                nsDir.eachFileRecurse { f ->
+                    def rel = nsDir.toPath().relativize(f.toPath())
+                    def dest = new File(outputDir, nsDir.name + '/' + rel)
+                    dest.parentFile.mkdirs()
+                    if (!f.isDirectory()) {
+                        dest.bytes = f.bytes
+                    }
+                }
+            }
+        }
+        markerFile.text = new Date().toString()
+        println 'Asset extraction complete!'
+    }
+}
+
+// Task to build the EPK bundle
+tasks.register('buildEpk') {
+    dependsOn 'extractMcAssets'
+    doLast {
+        println 'Building assets.epk...'
+        providers.exec {
+            commandLine 'node', 'createEPK.js'
+        }.result.get()
+        println 'EPK build complete!'
+    }
+}
+
+// Task to copy resources to wasm-gc output
 tasks.register('copyResources', Copy) {
     from 'src/main/resources'
     into layout.buildDirectory.dir("teavm/wasm-gc")
 }
 
-generateWasmGC.finalizedBy copyResources
+// Hook everything together
+generateWasmGC.dependsOn 'buildEpk'
+generateWasmGC.finalizedBy 'copyResources'
