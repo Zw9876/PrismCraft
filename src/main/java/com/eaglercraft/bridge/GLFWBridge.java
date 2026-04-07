@@ -20,6 +20,8 @@ public class GLFWBridge {
     private static GLFWFramebufferSizeCallback framebufferSizeCallback;
     private static GLFWCharCallback charCallback;
 
+    private static final java.util.Set<Integer> keysDown = new java.util.HashSet<>();
+
     public static long createWindow(int width, int height, String title) {
         windowWidth = width;
         windowHeight = height;
@@ -37,21 +39,23 @@ public class GLFWBridge {
     }
 
     private static void onKeyDown(KeyboardEvent event) {
+        int key = keyCodeToGLFW(event.getCode());
+        keysDown.add(key);
         if (keyCallback != null) {
-            int key = keyCodeToGLFW(event.getCode());
             keyCallback.invoke(1L, key, 0, 1, 0);
         }
         if (charCallback != null) {
-            String key = event.getKey();
-            if (key.length() == 1) {
-                charCallback.invoke(1L, key.charAt(0));
+            String k = event.getKey();
+            if (k.length() == 1) {
+                charCallback.invoke(1L, k.charAt(0));
             }
         }
     }
 
     private static void onKeyUp(KeyboardEvent event) {
+        int key = keyCodeToGLFW(event.getCode());
+        keysDown.remove(key);
         if (keyCallback != null) {
-            int key = keyCodeToGLFW(event.getCode());
             keyCallback.invoke(1L, key, 0, 0, 0);
         }
     }
@@ -154,5 +158,9 @@ public class GLFWBridge {
             case "Digit9": return 57;
             default: return 0;
         }
+    }
+
+    public static boolean isKeyDown(int keyCode) {
+        return keysDown.contains(keyCode);
     }
 }
