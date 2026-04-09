@@ -6,6 +6,8 @@ import org.teavm.jso.JSObject;
 public class Shader {
     private final WebGL2RenderingContext gl;
     private JSObject program;
+    private final String customVertexSource;
+    private final String customFragmentSource;
 
     private static final String VERTEX_SOURCE =
             "#version 300 es\n" +
@@ -30,13 +32,24 @@ public class Shader {
 
     public Shader(WebGL2RenderingContext gl) {
         this.gl = gl;
+        this.customVertexSource = null;
+        this.customFragmentSource = null;
+    }
+
+    public Shader(WebGL2RenderingContext gl, String vertexSource, String fragmentSource) {
+        this.gl = gl;
+        this.customVertexSource = vertexSource;
+        this.customFragmentSource = fragmentSource;
     }
 
     public boolean compile() {
-        JSObject vertexShader = compileShader(gl.getVertexShader(), VERTEX_SOURCE);
+        String vs = customVertexSource != null ? customVertexSource : VERTEX_SOURCE;
+        String fs = customFragmentSource != null ? customFragmentSource : FRAGMENT_SOURCE;
+
+        JSObject vertexShader = compileShader(gl.getVertexShader(), vs);
         if (vertexShader == null) return false;
 
-        JSObject fragmentShader = compileShader(gl.getFragmentShader(), FRAGMENT_SOURCE);
+        JSObject fragmentShader = compileShader(gl.getFragmentShader(), fs);
         if (fragmentShader == null) return false;
 
         program = gl.createProgram();
@@ -81,7 +94,7 @@ public class Shader {
 
     public void setTexture(int unit) {
         JSObject location = gl.getUniformLocation(program, "uTexture");
-        gl.uniformMatrix4fv(location, false, GLUtils.createFloat32Array(new float[]{unit}));
+        gl.uniform1i(location, unit);
     }
 
     public int getAttribLocation(String name) {

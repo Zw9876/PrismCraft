@@ -278,4 +278,16 @@ public interface WebGL2RenderingContext extends JSObject {
 
     @JSMethod
     void texImage2D(int target, int level, int internalFormat, int width, int height, int border, int format, int type);
+
+    @JSProperty("BLEND")
+    int getBlend();
+
+    @JSProperty("SRC_ALPHA")
+    int getSrcAlpha();
+
+    @JSProperty("ONE_MINUS_SRC_ALPHA")
+    int getOneMinusSrcAlpha();
+
+    @JSMethod("uniform1i")
+    void uniform1i(JSObject location, int v0);
 }

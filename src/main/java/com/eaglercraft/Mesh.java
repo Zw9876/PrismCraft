@@ -25,6 +25,7 @@ public class Mesh {
     }
 
     public void setupAttribs(Shader shader) {
+        gl.bindVertexArray(vao);
         int stride = 5 * 4; // 5 floats * 4 bytes (x, y, z, u, v)
 
         int posLoc = shader.getAttribLocation("aPosition");
@@ -34,6 +35,19 @@ public class Mesh {
         int texLoc = shader.getAttribLocation("aTexCoord");
         gl.enableVertexAttribArray(texLoc);
         gl.vertexAttribPointer(texLoc, 2, gl.getFloat(), false, stride, 3 * 4);
+    }
+
+    public void setupAttribs2D(Shader shader) {
+        gl.bindVertexArray(vao);
+        int stride = 4 * 4; // 4 floats * 4 bytes (x, y, u, v)
+
+        int posLoc = shader.getAttribLocation("aPos");
+        gl.enableVertexAttribArray(posLoc);
+        gl.vertexAttribPointer(posLoc, 2, gl.getFloat(), false, stride, 0);
+
+        int texLoc = shader.getAttribLocation("aTexCoord");
+        gl.enableVertexAttribArray(texLoc);
+        gl.vertexAttribPointer(texLoc, 2, gl.getFloat(), false, stride, 2 * 4);
     }
 
     public void draw() {
