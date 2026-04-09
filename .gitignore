@@ -34,3 +34,9 @@ tiny-remapper.jar
 enigma-cli.jar
 decompiled/
 decompiled-mapped/
+
+# Gradle build cache and outputs
+.gradle/
+build/
+
+.claude/

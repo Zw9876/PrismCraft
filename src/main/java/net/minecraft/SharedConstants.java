@@ -1,5 +1,7 @@
 package net.minecraft;
 
+import com.mojang.bridge.game.GameVersion;
+
 public class SharedConstants {
     public static final long MAXIMUM_TICK_TIME_NANOS = 300_000_000L;
     public static boolean CHECK_DATA_FIXER_SCHEMA = false;
@@ -22,11 +24,11 @@ public class SharedConstants {
         return sb.toString();
     }
 
-    public static int getProtocolVersion() {
-        return 754;
+    public static GameVersion getCurrentVersion() {
+        return DetectedVersion.BUILT_IN;
     }
 
-    public static String getCurrentVersion() {
-        return "1.16.5";
+    public static int getProtocolVersion() {
+        return 754;
     }
 }

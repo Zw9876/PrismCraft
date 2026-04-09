@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eaglercraft 1.16</title>
+    <title>PrismCraft</title>
     <style>
         * {
             margin: 0;
@@ -29,7 +29,7 @@
 <body>
 <canvas id="gameCanvas" width="854" height="480"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="wasm-gc-runtime.js"></script>
+<script src="eaglercraft.wasm-runtime.js"></script>
 <script>
     TeaVM.wasmGC.load("eaglercraft.wasm").then(teavm => {
         const main = teavm.instance.exports['main'];

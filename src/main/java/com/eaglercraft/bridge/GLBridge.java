@@ -292,4 +292,13 @@ public class GLBridge {
     public static void texImage2D(int target, int level, int internalFormat, int width, int height, int border, int format, int type) {
         gl.texImage2D(target, level, internalFormat, width, height, border, format, type);
     }
+
+    @org.teavm.jso.JSBody(params = {"bytes", "callback"}, script =
+            "var arr = new Uint8Array(bytes);" +
+                    "var blob = new Blob([arr], {type: 'image/png'});" +
+                    "var url = URL.createObjectURL(blob);" +
+                    "var img = new Image();" +
+                    "img.onload = function() { URL.revokeObjectURL(url); callback(img); };" +
+                    "img.src = url;")
+    public static native void loadImageFromBytes(byte[] bytes, com.eaglercraft.js.ImageCallback callback);
 }

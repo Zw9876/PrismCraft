@@ -32,15 +32,6 @@ public class ResourceLocation implements Comparable<ResourceLocation> {
     public String getNamespace() { return namespace; }
     public String getPath() { return path; }
 
-    public static ResourceLocation of(String location, char separator) {
-        return new ResourceLocation(decompose(location, separator));
-    }
-
-    private ResourceLocation(String[] parts) {
-        this.namespace = parts[0].isEmpty() ? "minecraft" : parts[0];
-        this.path = parts[1];
-    }
-
     public static ResourceLocation tryParse(String location) {
         try {
             return new ResourceLocation(location);
@@ -50,9 +41,7 @@ public class ResourceLocation implements Comparable<ResourceLocation> {
     }
 
     @Override
-    public String toString() {
-        return namespace + ":" + path;
-    }
+    public String toString() { return namespace + ":" + path; }
 
     @Override
     public boolean equals(Object obj) {
@@ -63,9 +52,7 @@ public class ResourceLocation implements Comparable<ResourceLocation> {
     }
 
     @Override
-    public int hashCode() {
-        return 31 * namespace.hashCode() + path.hashCode();
-    }
+    public int hashCode() { return 31 * namespace.hashCode() + path.hashCode(); }
 
     @Override
     public int compareTo(ResourceLocation other) {
