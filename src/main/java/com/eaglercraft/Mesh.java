@@ -54,4 +54,10 @@ public class Mesh {
         gl.bindVertexArray(vao);
         gl.drawArrays(gl.getTriangles(), 0, vertexCount);
     }
+
+    public void updateVertices(float[] vertices) {
+        gl.bindVertexArray(vao);
+        gl.bindBuffer(gl.getArrayBuffer(), vbo);
+        gl.bufferData(gl.getArrayBuffer(), GLUtils.createFloat32Array(vertices), gl.getStaticDraw());
+    }
 }
